@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<hibernate-configuration xmlns="http://www.hibernate.org/xsd/orm/cfg">
+    <session-factory>
+
+        <!-- JDBC Driver for MySQL -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+
+        <!-- Database Connection URL -->
+        <property name="hibernate.connection.url">
+            jdbc:mysql://localhost:3306/new_schema?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true
+        </property>
+
+        <!-- Database Username -->
+        <property name="hibernate.connection.username">Akashsahu</property>
+
+        <!-- Database Password -->
+        <property name="hibernate.connection.password">Akash@25</property>
+
+        <property name="hibernate.hbm2ddl.auto">update</property> <!-- (create, update )  create ker ne per new table create kera ga per update likh ne per new row add kera ga-->
+        <!--   create phalay drop ker ta hai table fir crete ker ta hai-->
+        <property name="hibernate.show_sql">true</property>
+
+
+    </session-factory>
+</hibernate-configuration>
