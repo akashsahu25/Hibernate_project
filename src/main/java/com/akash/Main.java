@@ -5,6 +5,7 @@ import org.hibernate.cfg.Configuration;
 import jakarta.persistence.Query;
 import java.sql.SQLOutput;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -37,8 +38,23 @@ public class Main {
         System.out.println("✅ Record Added Successfully!");
     }
 
-    static void deleteRecord() {
-        System.out.println("Delete Record Function Called");
+    static void deleteRecord(SessionFactory factory , Scanner sc) {
+        System.out.println("Please enter the roll number of the record you want to delete:");
+        int deleteRollnumber = sc.nextInt();
+        Session session = factory.openSession();
+
+        session.beginTransaction();
+
+        mapStudent student = session.find(mapStudent.class , deleteRollnumber);
+
+        if(student != null){
+            session.remove(student);
+            session.getTransaction().commit();
+            System.out.println("Record deleted successfully." + student.getName());
+        }else {
+            System.out.println("No record found with roll number: " + deleteRollnumber);
+        }
+        session.close();
     }
 
     static void updateRecord() {
@@ -74,7 +90,7 @@ public class Main {
                     addRecord(factory , sc);
                     break;
                 case 2:
-                    deleteRecord();
+                    deleteRecord(factory , sc);
                     break;
                 case 3:
                     updateRecord();
