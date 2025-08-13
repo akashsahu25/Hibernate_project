@@ -59,8 +59,37 @@ public class Main {
         session.close();
     }
 
-    static void updateRecord() {
-        System.out.println("Update Record Function Called");
+    static void updateRecord(SessionFactory factory , Scanner sc) {
+        System.out.println("Please enter the roll number of the record you want to update:");
+        int updateRoll = sc.nextInt();
+        sc.nextLine();
+        Session session = factory.openSession();
+        session.beginTransaction();
+        mapStudent student = session.find(mapStudent.class , updateRoll);
+        if(student != null){
+            System.out.println("Found student: " + student.getName() + ". Please enter new details.");
+
+
+            System.out.print("Enter New Name (current: " + student.getName() + "): ");
+            student.setName(sc.nextLine());
+
+            System.out.print("Enter New Age (current: " + student.getAge() + "): ");
+            student.setAge(sc.nextInt());
+            sc.nextLine();
+
+            System.out.print("Enter New Gmail (current: " + student.getGmail() + "): ");
+            student.setGmail(sc.nextLine());
+
+            System.out.print("Enter New Mobile Number (current: " + student.getMobileNumber() + "): ");
+            student.setMobileNumber(sc.nextLine());
+
+            session.getTransaction().commit();
+            System.out.println("\n✅ Record updated successfully!");
+
+        } else {
+            System.out.println("❌ Student with Roll Number " + updateRoll + " not found.");
+        }
+
     }
 
     static void printRecord(SessionFactory factory) {
@@ -116,7 +145,7 @@ public class Main {
                         deleteRecord(factory, sc);
                         break;
                     case 3:
-                        updateRecord();
+                        updateRecord(factory , sc );
                         break;
                     case 4:
                         printRecord(factory);
